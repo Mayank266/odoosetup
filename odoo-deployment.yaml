@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo
+  labels:
+    app: odoo
+spec:
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+        tier: frontend
+    spec:
+      containers:
+        - image: odoo:latest
+          name: odoo
+          imagePullPolicy: "Always"
+          envFrom:
+            - configMapRef:
+                name: odoo-config
+          ports:
+            - containerPort: 8069
+              name: odoo
